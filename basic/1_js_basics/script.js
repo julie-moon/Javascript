@@ -210,7 +210,7 @@ names[1] = 'Britta';
 names[5] = 'Crystal';
 console.log(names);
 
-var julie = ['julie', 'Moon', 1992, 'Front-End Developer'];
+var julie = ['Julie', 'Moon', 1992, 'Front-End Developer'];
 julie.push('mint'); // 배열 마지막 요소로 추가됨
 julie.unshift('Ms.'); // 배열 첫 번째 요소로 추가됨
 console.log(julie);
@@ -244,3 +244,180 @@ for(var i=0; i< tips.length; i++) {
     finalPaidAmounts[i] = calculateTips(tips[i]);
 }
 console.log(finalPaidAmounts);
+
+
+
+// 객체 & 메소드
+var moon = { // 객체 리터럴로 생성
+    firstName : 'Julie',
+    lastName : 'Moon',
+    birthYear : 1992,
+    favFood : ['pizza', 'hamburgers', 'spaghetti', 'salad'],
+    job : 'Front-End Developer',
+    isMarried : false,
+    calcAge : function() {
+    return 2018 - this.birthYear; // this는 현재 객체인 moon을 의미함
+    // this.age = 2018 - this.birthYear;
+}
+};
+console.log(moon);
+
+console.log(moon.firstName);
+console.log(moon['job']);
+
+var moonBirthDate = 'birthDate';
+console.log(moon[moonBirthDate]);
+
+moon.job = 'Back-End Developer';
+moon['isMarried'] = true;
+console.log(moon);
+
+// 메소드 호출 응용
+moon.age = moon.calcAge();
+console.log(moon);
+
+var jane = new Object(); // new Obect로 생성
+jane.firstName = 'Jane';
+jane.birthYear = 1935;
+jane['lastName'] = 'Smith';
+console.log(jane);
+
+
+
+// Mission 4
+var john = {
+    fullName : 'John Smith',
+    mass : 65,
+    height : 1.82,
+    calcBMI : function() {
+        this.bmi = this.mass / (this.height * this.height);
+        return this.bmi;
+    }
+}
+var mark = {
+    fullName : 'Mark Miller',
+    mass : 98,
+    height : 1.93,
+    calcBMI : function() {
+        this.bmi = this.mass / (this.height * this.height);
+        return this.bmi;
+    }
+}
+
+if(john.calcBMI() > mark.calcBMI()) {
+    console.log(john.fullName + ' has a higher BMI of ' + john.bmi);
+} else if (mark.bmi > john.bmi) {
+    console.log(mark.fullName + ' has a higher BMI of ' + mark.bmi);
+} else if (mark.bmi === john.bmi) {
+    console.log('They have the same BMI.')
+}
+
+
+
+// 반복문
+for(var i = 1; i <= 10; i++) {
+    console.log(i);
+}
+// for문
+for(var i = 0; i < julie.length; i++) {
+    console.log(julie[i]);
+}
+
+for (var i = julie.length - 1; i > -1; i--) {
+    console.log(julie[i]);
+}
+
+// while문
+var i = 0
+while(i < julie.length) {
+    console.log(julie[i]);
+    i++;
+}
+
+for(var i = 0; i < julie.length; i++) {
+    if(typeof julie[i] !== 'string') { continue };
+    console.log(julie[i]); // julie 배열에서 string을 가진 요소들만 모두 출력
+}
+
+for(var i = 0; i < julie.length; i++) {
+    if(typeof julie[i] !== 'string') { break };
+    console.log(julie[i]); // julie 배열에서 string이 아닌 요소를 만나면 반복문 빠져나옴
+}
+
+
+
+// Mission 5
+var johnTips = {
+    fullName : 'John Smith',
+    billValues : [124, 48, 268, 180, 42],
+    // tipsArr : [],
+    // finalPaidAmounts : [],
+    calcTips : function() {
+        this.tipsArr = [];
+        this.finalPaidAmounts = [];
+        
+        for(var i = 0; i < this.billValues.length; i++) { 
+            var percentage;
+            var bill = this.billValues[i];
+            
+            if(bill < 50) {
+                percentage = .2;
+            } else if(50 <= bill && bill < 200) {
+                percentage = .15;
+            } else if(200 <= bill) {
+                percentage = .1;
+            } // if ~ else   
+            
+            this.tipsArr[i] = bill * percentage;
+            this.finalPaidAmounts[i] = bill + this.tipsArr[i];
+        } // for end
+    } // function calculateTips
+}
+
+var markTips = {
+    fullName : 'Mark Miller',
+    billValues : [77, 375, 110, 45],
+    // tipsArr : [],
+    // finalPaidAmounts : [],
+    calcTips : function() {
+        this.tipsArr = [];
+        this.finalPaidAmounts = [];
+        
+        for(var i = 0; i < this.billValues.length; i++) {
+            var percentage;
+            var bill = this.billValues[i];
+            
+            if(bill < 100) {
+                percentage = .2;
+            } else if(100 <= bill && bill < 300) {
+                percentage = .1;
+            } else if(300 <= bill) {
+                percentage = .25;          
+            }// if ~ else
+            
+            this.tipsArr[i] = bill * percentage;
+            this.finalPaidAmounts[i] = bill + this.tipsArr[i];
+        } // for end
+    } // function calculateTips
+}
+
+function calcAvg(tips) {
+    var sum = 0;
+    for(var i = 0; i < tips.length; i++) {
+        sum += tips[i];
+    }
+    return sum / tips.length;
+}
+
+johnTips.calcTips();
+markTips.calcTips();
+
+johnTips.average = calcAvg(johnTips.tipsArr);
+markTips.average = calcAvg(markTips.tipsArr);
+console.log(johnTips, markTips);
+
+if(johnTips.average > markTips.average) {
+    console.log(johnTips.fullName + '\'s family pays higher tips, with an average of $' + johnTips.average);
+} else {
+    console.log(markTips.fullName + '\'s family pays higher tips, with an average of $' + markTips.average);
+}
